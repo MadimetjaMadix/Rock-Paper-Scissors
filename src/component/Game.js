@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import { Icon } from '@iconify/react'
+import { compuerOptions, playerOptions } from '../Icons/Hands'
 
-export default function Game() {
+export default function Game () {
   const [playerChoice, setPlayerChoice] = useState('✊')
-  const [tempChoice, setTempChoice] = useState('✊')
+  let tempChoice = null
   const [computerChoice, setComputerChoice] = useState('✊')
   const [animate, setAnimate] = useState(true)
   const [isAnimating, setIsAnimating] = useState(false)
   const [result, setResult] = useState(null)
   const choices = ['✊', '🖐️', '✌']
+  const choicesNames = ['Rock', 'Paper', 'Scissors']
 
   const handlePlayerChoice = (choice) => {
+    tempChoice = choice
     if (animate) {
       setIsAnimating(true)
       animateGame()
     }
-    setTempChoice(choice)
-    setResult('')
+    setResult('...')
     setTimeout(updateDisplay, animate ? 1800 : 300)
   }
 
@@ -37,11 +40,10 @@ export default function Game() {
   }
 
   const animateGame = () => {
-    console.log('Ani')
     toggleAnimate()
     setPlayerChoice('✊')
     setComputerChoice('✊')
-    setResult('')
+    setResult('...')
   }
 
   const getComputerChoice = () => {
@@ -50,9 +52,12 @@ export default function Game() {
     setComputerChoice(randomChoice)
   }
 
-  useEffect(() => {
-    getResults(playerChoice, computerChoice)
-  }, [playerChoice, computerChoice])
+  const getIcon = (option, type) => {
+    const IconsArray = type === 'computer' ? compuerOptions : playerOptions
+    if (option === '✊') return IconsArray[0]
+    else if (option === '🖐️') return IconsArray[1]
+    else if (option === '✌') return IconsArray[2]
+  }
 
   const getResults = (playerChoice, computerChoice) => {
     if (isAnimating) return
@@ -76,31 +81,38 @@ export default function Game() {
     }
   }
 
+  useEffect(() => getResults(playerChoice, computerChoice))
+
   const handleAnimateInput = () => {
     setAnimate(!animate)
   }
 
   return (
     <div className='game container'>
-      <div className='animate-input'><button className='animate-btn' onClick={() => handleAnimateInput()}> animate</button></div>
+      <div className='animate-input'>
+        <button className='animate-btn glassy' onClick={() => handleAnimateInput()}>
+          {animate ? 'no-animation' : 'animate'}
+        </button>
+      </div>
       <div className='display-box'>
-        <div className='computer-Icon'>🕹</div>
+        <div className='computer-Icon'><Icon icon='noto:desktop-computer' width='32' /></div>
         <div className='computer choice'>
           <span className='hand computer-hand'>
-            {computerChoice}
+            {getIcon(computerChoice, 'computer')}
           </span>
         </div>
         <div className='player choice'>
           <span className='hand player-hand'>
-            {playerChoice}
+            {getIcon(playerChoice, 'player')}
           </span>
         </div>
-        <div className='player-Icon'>🧑</div>
+        <div className='player-Icon'><Icon icon='emojione:man-medium-skin-tone' width='32' /></div>
       </div>
       <div className='results'>{result}</div>
+      <p>select your hand</p>
       <div className='selection-btns'>
         {choices.map((choice, index) =>
-          <button key={index} onClick={() => handlePlayerChoice(choice)}> {choice}</button>
+          <button className='select-btn glassy' key={index} onClick={() => handlePlayerChoice(choice)}> {choice} <br /> {choicesNames[index]}</button>
         )}
       </div>
     </div>
