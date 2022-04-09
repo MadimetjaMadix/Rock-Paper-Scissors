@@ -4,13 +4,14 @@ import { Icon } from '@iconify/react'
 import { compuerOptions, playerOptions } from '../Icons/Hands'
 import SplashScreen from './SplashScreen'
 
-export default function Game () {
+export default function Game() {
   const [playerChoice, setPlayerChoice] = useState('✊')
   const [computerChoice, setComputerChoice] = useState('✊')
   const [animate, setAnimate] = useState(true)
   const [isAnimating, setIsAnimating] = useState(false)
   const [result, setResult] = useState(null)
   const [gameResults, setGameResults] = useState({ player: [0, 0, 0], computer: [0, 0, 0] })
+
   const [gameIndex, setGameIndex] = useState(-1)
   const [displaySplash, setDisplaySplash] = useState(true)
 
@@ -38,6 +39,7 @@ export default function Game () {
     setPlayerChoice(tempChoice)
     getComputerChoice()
     getResults(playerChoice, computerChoice)
+    console.log(gameResults)
   }
 
   const toggleAnimate = () => {
@@ -71,48 +73,58 @@ export default function Game () {
 
   const initialiseGame = () => {
     setGameResults({ player: [0, 0, 0], computer: [0, 0, 0] })
-    setGameIndex(-1)
-    currIndex = 0
+    setPlayerChoice('✊')
+    setComputerChoice('✊')
+    setResult('...')
   }
 
   const setScore = (player, computer) => {
+    console.log('setScore: ', player, computer, currIndex, gameIndex)
+    const i = currIndex === -1 ? gameIndex : currIndex
     const tempGameResults = gameResults
-    if (currIndex >= 0 && currIndex <= 2) {
-      tempGameResults.computer[currIndex] = computer
-      tempGameResults.player[currIndex] = player
+    if (i >= 0 && i <= 2) {
+      tempGameResults.computer[i] = computer
+      tempGameResults.player[i] = player
     }
-    if (currIndex >= 2) {
+    if (i >= 2) {
       setDisplaySplash(true)
     }
     setGameResults(tempGameResults)
+    console.log(gameResults)
   }
 
-  const getResults = (playerChoice, computerChoice, game = true) => {
+  const getResults = (playerChoice, computerChoice) => {
+    const i = currIndex === -1 ? gameIndex : currIndex
+    const isPlaying = (i >= 0 && i <= 3)
     if (isAnimating) return
     switch (playerChoice + computerChoice) {
       case '✊✌':
       case '✌🖐️':
       case '🖐️✊':
+        setScore(1, 0)
         setResult('You Won!')
-        if (game) setScore(1, 0)
         break
       case '✌✊':
       case '🖐️✌':
       case '✊🖐️':
-        setResult('You lose!')
-        if (game) setScore(0, 1)
+        setScore(0, 1)
+        setResult('You lost!')
         break
       case '✌✌':
       case '🖐️🖐️':
       case '✊✊':
+        if (!isPlaying) {
+          setResult('...')
+          break
+        }
+        setScore(1, 1)
         setResult('You tied')
-        if (game) setScore(1, 1)
         break
       default: break
     }
   }
 
-  useEffect(() => getResults(playerChoice, computerChoice), [gameIndex])
+  useEffect(() => getResults(playerChoice, computerChoice), [result])
 
   const handleAnimateInput = () => {
     setAnimate(!animate)
@@ -121,6 +133,8 @@ export default function Game () {
   const handleNewGame = () => {
     initialiseGame()
     setDisplaySplash(false)
+    setGameIndex(-1)
+    currIndex = -1
   }
 
   return (
@@ -130,8 +144,8 @@ export default function Game () {
           <button className='primary-btn glassy' onClick={() => handleAnimateInput()}>
             {animate ? 'no-animation' : 'animate'}
           </button>
-          <button className='primary-btn glassy' onClick={() => initialiseGame()}>
-            New Game
+          <button className='primary-btn glassy' onClick={() => handleNewGame()}>
+            NEW GAME
           </button>
         </div>
         <div className='display-box'>
@@ -152,7 +166,7 @@ export default function Game () {
         <p>select your hand</p>
         <div className='selection-btns'>
           {choices.map((choice, index) =>
-            <button className='select-btn glassy' key={index} onClick={() => handlePlayerChoice(choice)}> {choice} <br /> {choicesNames[index]}</button>
+            <button className='select-btn glassy' key={index} onClick={() => handlePlayerChoice(choice)} disabled={displaySplash}> {choice} <br /> {choicesNames[index]}</button>
           )}
         </div>
         <div className='game-results'>
