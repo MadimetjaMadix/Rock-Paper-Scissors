@@ -39,9 +39,19 @@ body {
   max-width: 756px !important;
   aspect-ratio: 1 !important;
   z-index: 2;
-  top: -75vh;
+  top: -65vh;
   left: auto;
   right: auto;
+  border-radius: 11px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(20, 34, 66, 0.547);
+}
+
+@media screen and (min-width: 768px) {
+  
 }
 
 footer a {
@@ -77,7 +87,7 @@ nav a {
 }
 
 .game {
-  min-height: 75vh;
+  min-height: 65vh;
   z-index: 2;
 }
 
@@ -157,13 +167,13 @@ nav a {
 
 .selection-btns {
   max-width: 80%;
-  margin: 2rem auto;
+  margin: clamp(1rem, 0.2vw, 2rem) auto;
   display:flex;
   justify-content: space-around;
 }
 
 .select-btn {
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 50%;
   width: 6rem;
 }
