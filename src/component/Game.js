@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import { compuerOptions, playerOptions } from '../Icons/Hands'
 import SplashScreen from './SplashScreen'
 
-export default function Game() {
+export default function Game () {
   const [playerChoice, setPlayerChoice] = useState('✊')
   const [computerChoice, setComputerChoice] = useState('✊')
   const [animate, setAnimate] = useState(true)
@@ -39,7 +39,6 @@ export default function Game() {
     setPlayerChoice(tempChoice)
     getComputerChoice()
     getResults(playerChoice, computerChoice)
-    console.log(gameResults)
   }
 
   const toggleAnimate = () => {
@@ -79,7 +78,6 @@ export default function Game() {
   }
 
   const setScore = (player, computer) => {
-    console.log('setScore: ', player, computer, currIndex, gameIndex)
     const i = currIndex === -1 ? gameIndex : currIndex
     const tempGameResults = gameResults
     if (i >= 0 && i <= 2) {
@@ -90,7 +88,6 @@ export default function Game() {
       setDisplaySplash(true)
     }
     setGameResults(tempGameResults)
-    console.log(gameResults)
   }
 
   const getResults = (playerChoice, computerChoice) => {
@@ -166,9 +163,10 @@ export default function Game() {
         <p>select your hand</p>
         <div className='selection-btns'>
           {choices.map((choice, index) =>
-            <button className='select-btn glassy' key={index} onClick={() => handlePlayerChoice(choice)} disabled={displaySplash}> {choice} <br /> {choicesNames[index]}</button>
+            <button className='select-btn glassy pop-up' key={index} onClick={() => handlePlayerChoice(choice)} disabled={displaySplash}> {choice} <br /> {choicesNames[index]}</button>
           )}
         </div>
+        <hr />
         <div className='game-results'>
           <div className='computer'>
             <div className='stars'>
@@ -176,6 +174,7 @@ export default function Game() {
             </div>
             <span className='name'>Computer</span>
           </div>
+          <span>{`${gameIndex + 1}/3`}</span>
           <div className='player'>
             <div className='stars'>
               {gameResults.player.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
@@ -184,7 +183,7 @@ export default function Game() {
           </div>
         </div>
       </div>
-      {displaySplash && <SplashScreen result={result} onClick={handleNewGame} />}
+      {displaySplash && <SplashScreen results={gameResults} onClick={handleNewGame} />}
     </div>
   )
 }
