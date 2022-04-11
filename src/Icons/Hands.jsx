@@ -8,6 +8,41 @@ const rockP = <Icon icon='emojione:left-facing-fist-medium-light-skin-tone' />
 const paperP = <Icon icon='emojione:hand-with-fingers-splayed-medium-light-skin-tone' rotate={3} />
 const scissorP = <Icon icon='emojione:victory-hand-medium-light-skin-tone' rotate={3} />
 
+const avaterOptions = [
+  {
+    icon: 'emojione:alien',
+    name: 'Alien'
+  },
+  {
+    icon: 'emojione:alien-monster',
+    name: 'Monster'
+  },
+  {
+    icon: 'emojione:man-medium-skin-tone',
+    name: 'Man 1'
+  },
+  {
+    icon: 'emojione:man-medium-light-skin-tone',
+    name: 'Man 2'
+  },
+  {
+    icon: 'emojione:man-medium-dark-skin-tone',
+    name: 'Man 3'
+  },
+  {
+    icon: 'emojione:woman-medium-skin-tone',
+    name: 'Woman 1'
+  },
+  {
+    icon: 'emojione:woman-medium-light-skin-tone',
+    name: 'Woman 2'
+  },
+  {
+    icon: 'emojione:woman-medium-dark-skin-tone',
+    name: 'Woman 3'
+  }
+
+]
 const compuerOptions = [rockC, paperC, scissorC]
 const playerOptions = [rockP, paperP, scissorP]
-export { compuerOptions, playerOptions }
+export { compuerOptions, playerOptions, avaterOptions }

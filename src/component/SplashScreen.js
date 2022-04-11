@@ -1,7 +1,8 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
+import { avaterOptions } from '../Icons/Hands'
 
-export default function SplashScreen ({ results, onClick }) {
+export default function SplashScreen ({ results, onClick, onClickAvatar, myAvatar }) {
   const gatGameResults = () => {
     const playerScore = results.player.reduce((total, num) => total + num)
     const computerScore = results.computer.reduce((total, num) => total + num)
@@ -13,6 +14,11 @@ export default function SplashScreen ({ results, onClick }) {
     } else if (playerScore === computerScore && computerScore !== 0) {
       return 'TIE'
     } else { return 'OPEN' }
+  }
+
+  const getActiveAvatar = () => {
+    const index = avaterOptions.findIndex(avater => avater.icon === myAvatar) ?? 0
+    return avaterOptions[index].icon
   }
   const getContent = (gameResults) => {
     let content
@@ -65,6 +71,18 @@ export default function SplashScreen ({ results, onClick }) {
       case 'OPEN':
         content = (
           <>
+            <p>Choose Your Avatar</p>
+            <div className='avatar-list'>
+              {avaterOptions.map((avater, i) =>
+                <div
+                  key={i}
+                  className={`avatar ${getActiveAvatar() === avater.icon ? 'active' : ''}`}
+                  onClick={() => onClickAvatar(avater.icon)}
+                >
+                  <Icon icon={avater.icon} />
+                </div>
+              )}
+            </div>
             <p>Feeling a bit indecisive? play <br /> <span className='glowy open'>Rock-Paper-Scissors</span> <br /> and get your day rolling.</p>
           </>
         )
@@ -75,7 +93,6 @@ export default function SplashScreen ({ results, onClick }) {
   }
   return (
     <div className=' spalash-screen glassy container'>
-      <p>.</p>
       <div className='spalash-content'>
         {getContent(gatGameResults())}
       </div>

@@ -40,7 +40,7 @@ body {
   max-width: 756px !important;
   aspect-ratio: 1 !important;
   z-index: 2;
-  top: -67vh;
+  top: -75vh;
   left: auto;
   right: auto;
   border-radius: 11px;
@@ -48,9 +48,36 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background: rgba(20, 34, 66, 0.547);
+  background: rgba(20, 34, 66, 0.716);
   animation: slide-up 0.3s ease-in forwards;
 }
+
+.avatar-list{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 3rem;
+}
+
+.avatar-list .avatar{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.avatar-list .avatar.active {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.569);
+}
+
+.avatar-list .avatar span {
+  /*font-family: 'Roboto';*/
+  font-size: 1rem;
+}
+
 
 .spalash-content {
   font-size: clamp(1.5rem, 0.5vh + 1.5rem, 3rem);
@@ -101,7 +128,10 @@ body {
 }
 
 @media screen and (min-width: 768px) {
-  
+  .spalash-screen {
+    top: -68vh;
+    justify-content: space-around;
+  }
 }
 
 footer a {

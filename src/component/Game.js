@@ -5,6 +5,8 @@ import { compuerOptions, playerOptions } from '../Icons/Hands'
 import SplashScreen from './SplashScreen'
 
 export default function Game () {
+  const avatar = window.localStorage.getItem('avatar') || 'emojione:alien'
+  const [myAvatar, setMyAvatar] = useState(avatar)
   const [playerChoice, setPlayerChoice] = useState('✊')
   const [computerChoice, setComputerChoice] = useState('✊')
   const [animate, setAnimate] = useState(true)
@@ -134,6 +136,11 @@ export default function Game () {
     currIndex = -1
   }
 
+  const handleAvatarClick = (avaterIcon) => {
+    setMyAvatar(avaterIcon)
+    window.localStorage.setItem('avatar', avaterIcon)
+  }
+
   return (
     <div className='container'>
       <div className='game container'>
@@ -157,7 +164,7 @@ export default function Game () {
               {getIcon(playerChoice, 'player')}
             </span>
           </div>
-          <div className='player-Icon'><Icon icon='emojione:man-medium-skin-tone' width='32' /></div>
+          <div className='player-Icon'><Icon icon={myAvatar} width='32' /></div>
         </div>
         <div className='results'>{result}</div>
         <p>select your hand</p>
@@ -183,7 +190,7 @@ export default function Game () {
           </div>
         </div>
       </div>
-      {displaySplash && <SplashScreen results={gameResults} onClick={handleNewGame} />}
+      {displaySplash && <SplashScreen results={gameResults} onClick={handleNewGame} onClickAvatar={handleAvatarClick} myAvatar={myAvatar} />}
     </div>
   )
 }
