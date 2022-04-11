@@ -45,4 +45,11 @@ const avaterOptions = [
 ]
 const compuerOptions = [rockC, paperC, scissorC]
 const playerOptions = [rockP, paperP, scissorP]
-export { compuerOptions, playerOptions, avaterOptions }
+
+const getHandIcon = (option, type) => {
+  const IconsArray = type === 'computer' ? compuerOptions : playerOptions
+  if (option === '✊') return IconsArray[0]
+  else if (option === '🖐️') return IconsArray[1]
+  else if (option === '✌') return IconsArray[2]
+}
+export { getHandIcon, avaterOptions }

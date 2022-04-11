@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 
-import { compuerOptions, playerOptions } from '../Icons/Hands'
+import { getHandIcon } from '../Icons/Hands'
 import SplashScreen from './SplashScreen'
+import HandDisplay from './HandDisplay'
+import Stars from './Stars'
 
 export default function Game () {
   const avatar = window.localStorage.getItem('avatar') || 'emojione:alien'
@@ -63,13 +65,6 @@ export default function Game () {
     const randomIndex = Math.floor(Math.random() * choices.length)
     const randomChoice = choices[randomIndex]
     setComputerChoice(randomChoice)
-  }
-
-  const getIcon = (option, type) => {
-    const IconsArray = type === 'computer' ? compuerOptions : playerOptions
-    if (option === '✊') return IconsArray[0]
-    else if (option === '🖐️') return IconsArray[1]
-    else if (option === '✌') return IconsArray[2]
   }
 
   const initialiseGame = () => {
@@ -152,42 +147,19 @@ export default function Game () {
             NEW GAME
           </button>
         </div>
-        <div className='display-box'>
-          <div className='computer-Icon'><Icon icon='noto:desktop-computer' width='32' /></div>
-          <div className='computer choice'>
-            <span className='hand computer-hand'>
-              {getIcon(computerChoice, 'computer')}
-            </span>
-          </div>
-          <div className='player choice'>
-            <span className='hand player-hand'>
-              {getIcon(playerChoice, 'player')}
-            </span>
-          </div>
-          <div className='player-Icon'><Icon icon={myAvatar} width='32' /></div>
-        </div>
+        <HandDisplay computerChoice={computerChoice} playerChoice={playerChoice} myAvatar={myAvatar} />
         <div className='results'>{result}</div>
         <p>select your hand</p>
         <div className='selection-btns'>
           {choices.map((choice, index) =>
-            <button className='select-btn glassy pop-up' key={index} onClick={() => handlePlayerChoice(choice)} disabled={displaySplash}> {choice} <br /> {choicesNames[index]}</button>
+            <button className='select-btn glassy pop-up' key={index} onClick={() => handlePlayerChoice(choice)} disabled={displaySplash || isAnimating}> {choice} <br /> {choicesNames[index]}</button>
           )}
         </div>
         <hr />
         <div className='game-results'>
-          <div className='computer'>
-            <div className='stars'>
-              {gameResults.computer.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
-            </div>
-            <span className='name'>Computer</span>
-          </div>
+          <Stars results={gameResults.computer} type='computer' name='Computer' />
           <span>{`${gameIndex + 1}/3`}</span>
-          <div className='player'>
-            <div className='stars'>
-              {gameResults.player.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
-            </div>
-            <span className='name'>Your Score</span>
-          </div>
+          <Stars results={gameResults.player} type='player' name='Your score' />
         </div>
       </div>
       {displaySplash && <SplashScreen results={gameResults} onClick={handleNewGame} onClickAvatar={handleAvatarClick} myAvatar={myAvatar} />}

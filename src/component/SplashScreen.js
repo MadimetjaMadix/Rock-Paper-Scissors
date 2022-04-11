@@ -20,53 +20,58 @@ export default function SplashScreen ({ results, onClick, onClickAvatar, myAvata
     const index = avaterOptions.findIndex(avater => avater.icon === myAvatar) ?? 0
     return avaterOptions[index].icon
   }
+
+  const splashContent =
+    {
+      won: {
+        intro: 'There you have it, it\'s a',
+        outro: 'for you, we hope this helps ease the stress.',
+        state: 'WIN'
+      },
+      lost: {
+        intro: 'There you have it, it\'s a',
+        outro: 'for you, we hope this helps ease the stress.',
+        state: 'LOSE'
+      },
+      tie: {
+        intro: 'Unfortunately we are a bit indecisive ourselves, it\'s a',
+        outro: 'however you can play again.',
+        state: 'TIE'
+      },
+      open: {
+        intro: 'Feeling a bit indecisive? play',
+        outro: 'and get your day rolling.',
+        state: 'Rock-Paper-Scissors'
+      }
+    }
+
+  const Content = ({ state, arr, open = false }) => {
+    return (
+      <>
+        <p>
+          {splashContent[state]?.intro}
+          <br />
+          <span className='glowy win'>{splashContent[state]?.state}</span>
+          <br />
+          {!open && arr.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
+          <br />
+          {splashContent[state]?.outro}
+        </p>
+      </>
+    )
+  }
+
   const getContent = (gameResults) => {
     let content
     switch (gameResults) {
       case 'WON':
-        content = (
-          <>
-            <p>
-              There you have it, it's a
-              <br />
-              <span className='glowy win'>WIN</span>
-              <br />
-              {results.player.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
-              <br />
-              for you, we hope this helps ease the stress.
-            </p>
-          </>
-        )
+        content = <Content state='won' arr={results.player} />
         break
       case 'LOST':
-        content = (
-          <>
-            <p>
-              There you have it, it's a
-              <br />
-              <span className='glowy lost'>LOSE</span>
-              <br />
-              {results.player.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
-              <br />
-              for you, we hope this helps ease the stress.
-            </p>
-          </>
-        )
+        content = <Content state='lost' arr={results.player} />
         break
       case 'TIE':
-        content = (
-          <>
-            <p>
-              Unfortunately we are a bit undecisive ourselves, it's a
-              <br />
-              <span className='glowy tie'>TIE</span>
-              <br />
-              {results.player.map((star, index) => <Icon key={index} icon={`codicon:star-${star === 1 ? 'full' : 'empty'}`} />)}
-              <br />
-              however you can play again.
-            </p>
-          </>
-        )
+        content = <Content state='tie' arr={results.player} />
         break
       case 'OPEN':
         content = (
@@ -83,7 +88,7 @@ export default function SplashScreen ({ results, onClick, onClickAvatar, myAvata
                 </div>
               )}
             </div>
-            <p>Feeling a bit indecisive? play <br /> <span className='glowy open'>Rock-Paper-Scissors</span> <br /> and get your day rolling.</p>
+            <Content state='open' arr={results.player} open />
           </>
         )
         break
@@ -91,6 +96,7 @@ export default function SplashScreen ({ results, onClick, onClickAvatar, myAvata
     }
     return content
   }
+
   return (
     <div className=' spalash-screen glassy container'>
       <div className='spalash-content'>
