@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
+/* body styling*/
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Nanum Pen Script',  'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,6 +10,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* App default styling*/
 .App{
   text-align: center;
   color: white;
@@ -20,12 +22,15 @@ body {
   overflow: hidden;
 }
 
+
+/* bootstrap container style*/
 .container {
   padding: 1rem;
   max-width: 1440px;
   animation: slide-up 0.3s ease-in forwards;
 }
 
+/* Glass effect style*/
 .glassy {
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   border: 2px solid rgba( 255, 255, 255, 0.18 );
@@ -35,10 +40,12 @@ body {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-.computer-Icon, .player-Icon {
+/* hand Icon shadows*/
+[class$="Icon"]{
   filter: drop-shadow(0 10px 5px rgba(25, 28, 113, 0.6));
 }
 
+/*========================= Splash screen styling=============================*/ 
 .spalash-screen {
   position: relative;
   max-width: 756px !important;
@@ -71,14 +78,16 @@ body {
   align-items: center;
   padding-inline: 0.5rem;
   padding-bottom: 0.5rem;
+  border-bottom: 0px solid rgba(255, 255, 255, 0.569);
+  transition: border-bottom  0.3s linear;
 }
 
 .avatar-list .avatar.active {
   border-bottom: 2px solid rgba(255, 255, 255, 0.569);
+  
 }
 
 .avatar-list .avatar span {
-  /*font-family: 'Roboto';*/
   font-size: 1rem;
 }
 
@@ -138,11 +147,9 @@ body {
   }
 }
 
-footer a {
-  text-decoration: none;
-  color: rgb(67, 61, 61);
-}
 
+
+/*========================= header styling=============================*/ 
 
 header {
   max-height: 15vh;
@@ -169,6 +176,8 @@ nav .title {
 nav a {
   color: inherit;
 }
+
+/*========================= Game styling=============================*/ 
 
 .game {
   min-height: 65vh;
@@ -267,9 +276,18 @@ nav a {
   grid-template-columns: 1fr 0.5fr 1fr;
 }
 
+/*========================= Footer styling=============================*/ 
+
 footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
 }
+
+footer a {
+  text-decoration: none;
+  color: rgb(67, 61, 61);
+}
+
+

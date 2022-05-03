@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { avaterOptions } from '../Icons/Hands'
 
 export default function SplashScreen ({ results, onClick, onClickAvatar, myAvatar }) {
-  const gatGameResults = () => {
+  const getGameResults = () => {
     const playerScore = results.player.reduce((total, num) => total + num)
     const computerScore = results.computer.reduce((total, num) => total + num)
 
@@ -100,7 +100,7 @@ export default function SplashScreen ({ results, onClick, onClickAvatar, myAvata
   return (
     <div className=' spalash-screen glassy container'>
       <div className='spalash-content'>
-        {getContent(gatGameResults())}
+        {getContent(getGameResults())}
       </div>
       <button className='primary-btn glassy pop-up' onClick={onClick}> NEW GAME</button>
     </div>

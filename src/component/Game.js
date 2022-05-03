@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Icon } from '@iconify/react'
 
-import { getHandIcon } from '../Icons/Hands'
 import SplashScreen from './SplashScreen'
 import HandDisplay from './HandDisplay'
 import Stars from './Stars'
